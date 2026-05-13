@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volt-Connect: Simulation Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="start-menu-overlay">
+        <div id="menu-content">
+            <h1>VOLT-CONNECT</h1>
+            <p>Simulation Edition</p>
+            <div class="menu-buttons">
+                <button id="btn-start-game">Bắt đầu chơi</button>
+                <button id="btn-high-score">Kỷ lục</button>
+                <button id="btn-instructions">Hướng dẫn</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="info-modal" class="modal-hidden">
+        <div class="modal-content">
+            <h2 id="modal-title"></h2>
+            <div id="modal-body"></div>
+            <button id="btn-close-modal">Đóng</button>
+        </div>
+    </div>
+
+    <div id="ui-layer">
+        <div id="stats-panel">
+            <div id="scoreDisplay">0</div>
+            <div id="heartsContainer">❤️❤️❤️</div>
+        </div>
+        <div class="budget" id="budgetDisplay">Ngân sách hiện tại: $0</div>
+        <div class="btn-container">
+            <button id="btn-check">Kiểm tra</button>
+        </div>
+    </div>
+
+    <div id="error-toast" class="modal-hidden">Kết nối không tối ưu! Hãy thử lại.</div>
+    <button id="btn-exit">Thoát Game</button>
+    <canvas id="gameCanvas"></canvas>
+
+    <script src="js/utils.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
