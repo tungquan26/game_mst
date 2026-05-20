@@ -125,12 +125,36 @@ document.getElementById('btn-check').addEventListener('click', () => {
     if(showSolution || !gameStarted) return;
     
     let isCorrect = playerWires.length === cities.length - 1;
+    
+    let parent = Array.from({length: cities.length}, (_, i) => i);
+    function find(i) { return parent[i] === i ? i : parent[i] = find(parent[i]); }
+    
+    let totalPlayerWeight = 0;
     for(let pw of playerWires) {
-        let found = mstSolution.some(mw => (pw.u === mw.u && pw.v === mw.v) || (pw.u === mw.v && pw.v === mw.u));
-        if(!found) { pw.isWrong = true; isCorrect = false; }
+        let rootU = find(pw.u);
+        let rootV = find(pw.v);
+        if (rootU !== rootV) {
+            parent[rootU] = rootV;
+        } else {
+            isCorrect = false;
+        }
+        totalPlayerWeight += pw.cost;
+    }
+    
+    if (Math.abs(totalPlayerWeight - initialBudget) > 0.1) {
+        isCorrect = false;
+    }
+
+    for(let pw of playerWires) {
+        pw.isWrong = false;
+        if (!isCorrect) {
+            let found = mstSolution.some(mw => (pw.u === mw.u && pw.v === mw.v) || (pw.u === mw.v && pw.v === mw.u));
+            if (!found) pw.isWrong = true;
+        }
     }
 
     if(isCorrect) {
+        mstSolution = playerWires.map(pw => ({ u: pw.u, v: pw.v, weight: pw.cost }));
         playSound(sfxSuccess);
         showSolution = true;
 
